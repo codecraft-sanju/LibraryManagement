@@ -6,7 +6,7 @@ export default defineConfig({
   server: {
     proxy: {
       '/api': {
-        target: 'https://librarymanagement-xjch.onrender.com',
+        target: 'https://librarymanagement-xjch.onrender.com/',
       },
     },
   },
