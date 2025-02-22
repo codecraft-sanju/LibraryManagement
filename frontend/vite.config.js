@@ -6,9 +6,9 @@ export default defineConfig({
   server: {
     proxy: {
       '/api': {
-        target: 'https://librarymanagement-1-t0w6.onrender.com/',
-        changeOrigin: true,
-        secure: false,
+        target:
+          'https://librarymanagement-1-t0w6.onrender.com/api/user/register',
+      
       },
     },
   },
