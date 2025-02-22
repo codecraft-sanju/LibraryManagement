@@ -4,23 +4,26 @@ import cookieParser from 'cookie-parser';
 import { connectDB } from './config/db.js';
 import userRoutes from './routes/userRoutes.js';
 import attendanceRouter from './routes/attendanceRoutes.js';
+
 dotenv.config();
 const app = express();
-const PORT = 5000;
+const PORT = process.env.PORT || 5000; // ✅ Use dynamic port
 
-// using middleware
+// Middleware
 app.use(express.json());
 app.use(cookieParser());
 
+// Routes
+app.use('/api/user', userRoutes);
+app.use('/api/attendance', attendanceRouter);
 
-// routes
-app.use("/api/user",userRoutes);
-app.use('/api/attendance',attendanceRouter);
-app.use((req,res)=>{
-    res.send("Hello sanjay")
-})
+// Default Route
+app.use((req, res) => {
+  res.send('Hello Sanjay, Your Backend is Working!');
+});
 
-app.listen(PORT,()=>{
-    console.log(`http://localhost:${PORT}`);
-    connectDB();
+// Start Server
+app.listen(PORT, () => {
+  console.log(`Server running on port ${PORT}`);
+  connectDB();
 });
