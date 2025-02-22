@@ -6,7 +6,7 @@ export default defineConfig({
   server: {
     proxy: {
       '/api': {
-        target: 'http://localhost:5000/',
+        target: 'https://librarymanagement-1-t0w6.onrender.com/',
       },
     },
   },
