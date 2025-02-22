@@ -1,5 +1,5 @@
 import { Attendance } from "../models/attendanceModel.js";
-import { User } from "../models/userModel.js"; // Import User model
+import { User } from "../models/userModel.js"; 
 
 // Add attendance for logged-in user
 export const addAttendance = async (req, res) => {

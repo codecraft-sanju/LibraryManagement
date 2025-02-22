@@ -19,6 +19,7 @@ export const UserProvider = ({ children }) => {
             toast.success(data.message);
             setIsAuth(true);
             navigate('/login');
+            window.location.reload();
         } catch (error) {
             toast.error(error.response?.data?.message || "Registration failed. Please try again.");
         } finally {
