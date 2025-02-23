@@ -63,7 +63,7 @@ const About = () => {
                 className="object-cover w-full h-64 rounded-lg shadow-md"
               />
               <img
-                src={student2}
+                src={student2}//win image
                 alt="Student"
                 className="object-cover w-full h-64 rounded-lg shadow-md"
               />
