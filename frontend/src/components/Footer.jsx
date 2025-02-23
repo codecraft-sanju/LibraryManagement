@@ -25,7 +25,7 @@ const Footer = ({ homeRef, aboutRef, cardRef, rulesRef, servicesRef, contactRef 
                     />
                     <div>
                         <p className="text-lg font-semibold">Nirmal Vaishnav</p>
-                        <a href="van.featherstone@medusind.com" className="text-sm">van.featherstone@medusind.com</a>
+                        <a href="van.featherstone@medusind.com" className="text-sm">nirmalvaishnav@gmail.com</a>
                         <div className="flex items-center mt-1">
                             <FaInstagram className="mr-2 text-xl" />
                             <a
