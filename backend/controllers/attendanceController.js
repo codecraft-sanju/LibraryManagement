@@ -1,27 +1,41 @@
-import { Attendance } from "../models/attendanceModel.js";
-import { User } from "../models/userModel.js"; 
+import { Attendance } from '../models/attendanceModel.js';
+import { User } from '../models/userModel.js';
 
 // Add attendance for logged-in user
 export const addAttendance = async (req, res) => {
   const { date } = req.body;
 
   try {
-    // Check if the user has already marked attendance for the given date
-    const existingAttendance = await Attendance.findOne({ date, user: req.user._id });
-    if (existingAttendance) {
-      return res.status(400).json({ message: "Attendance for this date already marked by you." });
+    // Get user details
+    const user = await User.findById(req.user._id);
+
+    if (!user) {
+      return res.status(404).json({ message: 'User not found!' });
     }
 
-    // Add attendance for the logged-in user
-    const newAttendance = new Attendance({
+    // Check if the user has already marked attendance for the given date
+    const existingAttendance = await Attendance.findOne({
       date,
       user: req.user._id,
     });
-    await newAttendance.save();
+    if (existingAttendance) {
+      return res
+        .status(400)
+        .json({ message: 'Attendance for this date already marked by you.' });
+    }
 
-    res.status(201).json({ message: "Attendance marked successfully." });
+    // Add attendance with user details
+    const newAttendance = new Attendance({
+      date,
+      user: req.user._id,
+      userName: user.name, // Store name
+      userEmail: user.email, // Store email
+    });
+
+    await newAttendance.save();
+    res.status(201).json({ message: 'Attendance marked successfully.' });
   } catch (error) {
-    res.status(500).json({ error: "Failed to mark attendance." });
+    res.status(500).json({ error: 'Failed to mark attendance.' });
   }
 };
 
@@ -31,20 +45,9 @@ export const getAllAttendance = async (req, res) => {
     // Fetch all attendance records for the logged-in user
     const attendanceRecords = await Attendance.find({ user: req.user._id });
 
-    // Manually add the user's name and email to each record
-    const user = await User.findById(req.user._id);
-    const attendanceWithUserInfo = attendanceRecords.map(record => ({
-      _id: record._id,
-      date: record.date,
-      user: {
-        name: user.name,
-        email: user.email,
-      },
-    }));
-
-    res.status(200).json(attendanceWithUserInfo);
+    res.status(200).json(attendanceRecords);
   } catch (error) {
-    res.status(500).json({ error: "Failed to fetch attendance records." });
+    res.status(500).json({ error: 'Failed to fetch attendance records.' });
   }
 };
 
@@ -54,8 +57,8 @@ export const clearAttendance = async (req, res) => {
     // Delete all attendance records for the logged-in user
     await Attendance.deleteMany({ user: req.user._id });
 
-    res.status(200).json({ message: "Attendance history cleared." });
+    res.status(200).json({ message: 'Attendance history cleared.' });
   } catch (error) {
-    res.status(500).json({ error: "Failed to clear attendance history." });
+    res.status(500).json({ error: 'Failed to clear attendance history.' });
   }
 };
