@@ -9,7 +9,7 @@ import cors from "cors";
 
 dotenv.config();
 const app = express();
-const PORT = process.env.PORT || 5000; // ✅ Use dynamic port
+const PORT = process.env.PORT || 5000; 
 
 // Middleware
 app.use(cors());
